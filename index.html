@@ -137,7 +137,23 @@
       <input type="email" id="email" placeholder="Email" required style="width:100%;margin:8px 0;padding:10px;" />
       <input type="tel" id="phone" placeholder="Phone Number" required style="width:100%;margin:8px 0;padding:10px;" />
       <input type="text" id="address" placeholder="Delivery Address" required style="width:100%;margin:8px 0;padding:10px;" />
-
+      <select id="playerName" required style="width:100%;margin:8px 0;padding:10px;">
+                <option value="">Select Player</option>
+                <option value="Bode Braunwarth">Bode Braunwarth</option>
+                <option value="Cameron Hascall">Cameron Hascall</option>
+                <option value="Cash Frank">Cash Frank</option>
+                <option value="Crosby Loomis">Crosby Loomis</option>
+                <option value="Granger Navratil">Granger Navratil</option>
+                <option value="James Dauwalter">James Dauwalter</option>
+                <option value="James Ranweiler">James Ranweiler</option>
+                <option value="Jett Jackman">Jett Jackman</option>
+                <option value="Lane Knaak">Lane Knaak</option>
+                <option value="Lucas Neudorff">Lucas Neudorff</option>
+                <option value="McCoy Newell">McCoy Newell</option>
+                <option value="Ryan Kluge">Ryan Kluge</option>
+                <option value="Sawyer Hedlof">Sawyer Hedlof</option>
+  <!-- Add more players as needed -->
+</select>
       <div style="margin-top:16px; display: flex; gap: 12px; flex-wrap: wrap;">
         <button onclick="openVenmoModal()" style="flex:1; padding:12px; background:#3d95ce; color:white; border:none; border-radius:6px;">Pay Now with Venmo</button>
         <button onclick="submitOrder('delivery')" style="flex:1; padding:12px; background:#555; color:white; border:none; border-radius:6px;">Pay on Pickup/Delivery (Cash or Check)</button>
@@ -245,6 +261,7 @@ function closeVenmoModal() {
   });
 }
 function submitOrder(paymentMethod) {
+  const player = document.getElementById("playerName").value.trim();
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -256,6 +273,7 @@ function submitOrder(paymentMethod) {
   }
 
   const order = {
+    player,
     name,
     email,
     phone,
