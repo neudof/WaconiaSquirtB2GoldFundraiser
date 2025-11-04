@@ -133,191 +133,143 @@
   <input type="tel" id="phone" placeholder="Phone Number" required style="width:100%;margin:8px 0;padding:10px;" />
   <input type="text" id="address" placeholder="Delivery Address" required style="width:100%;margin:8px 0;padding:10px;" />
 
-  <div style="margin-top:16px; display: flex; gap: 12px; flex-wrap: wrap;">
-    <button onclick="submitOrder('venmo')" style="flex:1; padding:12px; background:#3d95ce; color:white; border:none; border-radius:6px;">Pay Now with Venmo</button>
-    <button onclick="submitOrder('delivery')" style="flex:1; padding:12px; background:#555; color:white; border:none; border-radius:6px;">Pay on Pickup/Delivery (Cash or Check)</button>
-  </div>
+ <div style="margin-top:16px; display: flex; gap: 12px; flex-wrap: wrap;">
+  <button onclick="submitOrder('venmo')" style="flex:1; padding:12px; background:#3d95ce; color:white; border:none; border-radius:6px;">Pay Now with Venmo</button>
+  <button onclick="submitOrder('delivery')" style="flex:1; padding:12px; background:#555; color:white; border:none; border-radius:6px;">Pay on Pickup/Delivery (Cash or Check)</button>
+</div>
 </form>
   </div>
 
   <script>
-    const cart = [];
+<script>
+  const cart = [];
 
-    function addToCart(name, price, qtyId) {
-      const quantity = parseInt(document.getElementById(qtyId).value);
-      cart.push({ name, price, quantity });
-      document.getElementById("cartPromptText").textContent = `${quantity} x ${name} added to cart`;
-      document.getElementById("cartPrompt").style.display = "block";
-      updateCartSummary();
-    }
-
-    function addDonation() {
-      const amount = parseFloat(document.getElementById("donationAmount").value);
-      if (isNaN(amount) || amount < 1) {
-        alert("Please enter a donation amount of at least $1");
-        return;
-      }
-      cart.push({ name: "Donation", price: amount, quantity: 1 });
-      document.getElementById("cartPromptText").textContent = `$${amount.toFixed(2)} donation added to cart`;
-      document.getElementById("cartPrompt").style.display = "block";
-      updateCartSummary();
-    }
-
-    function closeCartPrompt() {
-      document.getElementById("cartPrompt").style.display = "none";
-    }
-
-    function goToCheckout() {
-      document.getElementById("cartPrompt").style.display = "none";
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function updateCartSummary() {
-      const cartSummary = document.getElementById("cartSummary");
-      const cartItems = document.getElementById("cartItems");
-      const cartTotal = document.getElementById("cartTotal");
-
-      cartItems.innerHTML = "";
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
-        const div = document.createElement("div");
-        div.style.display = "flex";
-        div.style.justifyContent = "space-between";
-        div.style.margin = "8px 0";
-        div.innerHTML = `
-          <span>${item.quantity} x ${item.name} - $${itemTotal.toFixed(2)}</span>
-          <button onclick="removeFromCart(${index})">Remove</button>
-        `;
-        cartItems.appendChild(div);
-      });
-
-      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
-      cartSummary.style.display = cart.length > 0 ? "block" : "none";
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateCartSummary();
-}
-const pizzas = [
-  {
-    name: "Double Cheese Pizza",
-    price: 12.00,
-    desc: "The ultimate cheese-lover's pizza, topped with cheddar and mozzarella.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DoubleCheese.webp"
-  },
-  {
-    name: "Pepperoni Pizza",
-    price: 12.00,
-    desc: "Covered from edge to edge with pepperoni and mozzarella cheese.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Pepperoni.webp"
-  },
-  {
-    name: "Sausage Pizza",
-    price: 12.00,
-    desc: "Made with savory sausage and mozzarella cheese.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage.webp"
-  },
-  {
-    name: "Sausage and Pepperoni Pizza",
-    price: 13.00,
-    desc: "Featuring sausage, pepperoni and mozzarella cheese.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage%26Pepperoni.webp"
-  },
-  {
-    name: "Sausage and Mushroom Pizza",
-    price: 13.00,
-    desc: "Loaded up with sausage, mushrooms and mozzarella cheese.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage%26Mushroom.webp"
-  },
-  {
-    name: "Inferno",
-    price: 13.00,
-    desc: "Spicy combo of sausage, pepperoni, mozzarella and jalapeños.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Inferno.webp"
-  },
-  {
-    name: "Deluxe Combo",
-    price: 14.00,
-    desc: "Sausage, pepperoni, onions, mushrooms, green peppers, and mozzarella cheese.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DeluxeCombination.webp"
-  },
-  {
-    name: "Six Pack",
-    price: 14.00,
-    desc: "Sausage, pepperoni, Canadian bacon, bacon, cheddar and mozzarella.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/SixPack.webp"
-  },
-  {
-    name: "BCB",
-    price: 14.00,
-    desc: "Bacon Cheese Burger pizza topped with beef, cheese, and bacon.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/BCB.webp"
-  },
-  {
-    name: "Chicken Alfredo Pizza",
-    price: 14.00,
-    desc: "Garlic chicken, creamy alfredo sauce, and mozzarella on seasoned crust.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ChickenAlfredo.webp"
-  },
-  {
-    name: "Breakfast Pizza",
-    price: 14.00,
-    desc: "Sausage, bacon, scrambled eggs, green onions, cheddar, mozzarella, and country gravy.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Breakfast.webp"
-  },
-  {
-    name: "El Jefe",
-    price: 14.00,
-    desc: "Chorizo, jalapeños, black olives, green onions, mozzarella, and cheddar.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ElJefe.webp"
-  },
-  {
-    name: "Italian Beef",
-    price: 14.00,
-    desc: "Sliced beef, giardiniera, sweety drop peppers, mozzarella and provolone.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ItalianBeef.webp"
-  },
-  {
-    name: "Cauliflower Crust Sausage & Pepperoni",
-    price: 14.75,
-    desc: "Gluten-free crust topped with sausage, pepperoni, and mozzarella.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustSausage%26Pepperoni.webp"
-  },
-  {
-    name: "Cauliflower Crust Margherita",
-    price: 14.75,
-    desc: "Tomato, basil, garlic, and sliced mozzarella on gluten-free crust.",
-    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustMargherita.webp"
-  },
-  {
-    name: "Cauliflower Crust Chicken Alfredo",
-    price: 14.75,
-    desc: "White chicken, alfredo sauce, and mozzarella on gluten-free crust.",
-    image: "https://github.com/neudof/WaconiaSquirtB2GoldFundraiser/blob/main/images/CauliflowerCrustChickenAlfredo.webp?raw=true"
+  function addToCart(name, price, qtyId) {
+    const quantity = parseInt(document.getElementById(qtyId).value);
+    cart.push({ name, price, quantity });
+    document.getElementById("cartPromptText").textContent = `${quantity} x ${name} added to cart`;
+    document.getElementById("cartPrompt").style.display = "block";
+    updateCartSummary();
   }
-];
 
-const tileContainer = document.getElementById("pizzaTiles");
-pizzas.forEach((pizza, index) => {
-  const qtyId = `qty${index}`;
-  const tile = document.createElement("div");
-  tile.className = "tile";
-  tile.innerHTML = `
-    <img src="https://via.placeholder.com/400x300?text=${encodeURIComponent(pizza.name)}" alt="${pizza.name}" />
-    <h2>${pizza.name}</h2>
-    <p>${pizza.desc}</p>
-    <p><strong>$${pizza.price.toFixed(2)}</strong></p>
-    <select id="${qtyId}">
-      ${[...Array(10)].map((_, i) => `<option value="${i+1}">Qty: ${i+1}</option>`).join('')}
-    </select>
-    <button onclick="addToCart('${pizza.name}', ${pizza.price}, '${qtyId}')">Add to Cart</button>
-  `;
-  tileContainer.appendChild(tile);
-});
+  function addDonation() {
+    const amount = parseFloat(document.getElementById("donationAmount").value);
+    if (isNaN(amount) || amount < 1) {
+      alert("Please enter a donation amount of at least $1");
+      return;
+    }
+    cart.push({ name: "Donation", price: amount, quantity: 1 });
+    document.getElementById("cartPromptText").textContent = `$${amount.toFixed(2)} donation added to cart`;
+    document.getElementById("cartPrompt").style.display = "block";
+    updateCartSummary();
+  }
+
+  function closeCartPrompt() {
+    document.getElementById("cartPrompt").style.display = "none";
+  }
+
+  function goToCheckout() {
+    document.getElementById("cartPrompt").style.display = "none";
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  function updateCartSummary() {
+    const cartSummary = document.getElementById("cartSummary");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      const div = document.createElement("div");
+      div.style.display = "flex";
+      div.style.justifyContent = "space-between";
+      div.style.margin = "8px 0";
+      div.innerHTML = `
+        <span>${item.quantity} x ${item.name} - $${itemTotal.toFixed(2)}</span>
+        <button onclick="removeFromCart(${index})">Remove</button>
+      `;
+      cartItems.appendChild(div);
+    });
+
+    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+    cartSummary.style.display = cart.length > 0 ? "block" : "none";
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartSummary();
+  }
+
+  function submitOrder(paymentMethod) {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    if (!name || !email || !phone || !address) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    const order = {
+      name,
+      email,
+      phone,
+      address,
+      payment: paymentMethod,
+      items: cart
+    };
+
+    fetch("YOUR_WEB_APP_URL_HERE", {
+      method: "POST",
+      body: JSON.stringify(order),
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(res => res.text())
+    .then(msg => {
+      alert("Thank you! Your order has been submitted.");
+      cart.length = 0;
+      updateCartSummary();
+    })
+    .catch(err => {
+      console.error("Error submitting order:", err);
+      alert("There was a problem submitting your order.");
+    });
+  }
+
+  const pizzas = [
+    { name: "Double Cheese Pizza", price: 12.00, desc: "The ultimate cheese-lover's pizza, topped with cheddar and mozzarella.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DoubleCheese.webp" },
+    { name: "Pepperoni Pizza", price: 12.00, desc: "Covered from edge to edge with pepperoni and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Pepperoni.webp" },
+    { name: "Sausage Pizza", price: 12.00, desc: "Made with savory sausage and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage.webp" },
+    { name: "Sausage and Pepperoni Pizza", price: 13.00, desc: "Featuring sausage, pepperoni and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage%26Pepperoni.webp" },
+    { name: "Sausage and Mushroom Pizza", price: 13.00, desc: "Loaded up with sausage, mushrooms and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage%26Mushroom.webp" },
+    { name: "Inferno", price: 13.00, desc: "Spicy combo of sausage, pepperoni, mozzarella and jalapeños.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Inferno.webp" },
+    { name: "Deluxe Combo", price: 14.00, desc: "Sausage, pepperoni, onions, mushrooms, green peppers, and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DeluxeCombination.webp" },
+    { name: "Six Pack", price: 14.00, desc: "Sausage, pepperoni, Canadian bacon, bacon, cheddar and mozzarella.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/SixPack.webp" },
+    { name: "BCB", price: 14.00, desc: "Bacon Cheese Burger pizza topped with beef, cheese, and bacon.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/BCB.webp" },
+    { name: "Chicken Alfredo Pizza", price: 14.00, desc: "Garlic chicken, creamy alfredo sauce, and mozzarella on seasoned crust.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ChickenAlfredo.webp" },
+    { name: "Breakfast Pizza", price: 14.00, desc: "Sausage, bacon, scrambled eggs, green onions, cheddar, mozzarella, and country gravy.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Breakfast.webp" },
+    { name: "El Jefe", price: 14.00, desc: "Chorizo, jalapeños, black olives, green onions, mozzarella, and cheddar.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ElJefe.webp" },
+    { name: "Italian Beef", price: 14.00, desc: "Sliced beef, giardiniera, sweety drop peppers, mozzarella and provolone.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ItalianBeef.webp" },
+    { name: "Cauliflower Crust Sausage & Pepperoni", price: 14.75, desc: "Gluten-free crust topped with sausage, pepperoni, and mozzarella.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustSausage%26Pepperoni.webp" },
+    { name: "Cauliflower Crust Margherita", price: 14.75, desc: "Tomato, basil, garlic, and sliced mozzarella on gluten-free crust.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustMargherita.webp" },
+    { name: "Cauliflower Crust Chicken Alfredo", price: 14.75, desc: "White chicken, alfredo sauce, and mozzarella on gluten-free crust.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustChickenAlfredo.webp" }
+  ];
+
+  const tileContainer = document.getElementById("pizzaTiles");
+  pizzas.forEach((pizza, index) => {
+    const qtyId = `qty${index}`;
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.innerHTML = `
+      <img src="${pizza.image}" alt="${pizza.name}" />
+      <h2>${pizza.name}</h2>
+      <p>${pizza.desc}</p>
+      <p><strong>$${pizza.price.toFixed(2)}</strong></
     </script>
 </body>
 </html>
