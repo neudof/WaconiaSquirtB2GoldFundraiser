@@ -142,8 +142,17 @@
 <!-- Venmo Payment Modal -->
 <div id="venmoModal" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:#fff; padding:24px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.2); z-index:1000; max-width:400px; text-align:center;">
   <h3>Send Payment via Venmo</h3>
-  <p>Please send your total to <strong>@WaconiaWildcats_B2Gold</strong> and include your name in the notes.</p>
+  <p>
+    Please send your total to <strong id="venmoHandle">@WaconiaWildcats_B2Gold</strong> and include your name in the notes.
+  </p>
+  <button onclick="copyVenmoHandle()" style="margin-bottom:12px; padding:6px 12px; font-size:14px;">Copy Handle</button>
   <p id="venmoAmount" style="font-weight:bold; margin:12px 0;"></p>
+
+  <a href="https://venmo.com/WaconiaWildcats_B2Gold" target="_blank" style="display:inline-block; margin:12px 0; color:#3d95ce; font-weight:bold;">Open Venmo Profile</a>
+
+  <button onclick="submitOrder('venmo')" style="padding:10px 16px; background:#3d95ce; color:white; border:none; border-radius:6px;">I’ve Paid — Submit My Order</button>
+  <button onclick="closeVenmoModal()" style="margin-top:8px; padding:8px 12px;">Cancel</button>
+</div>
 
   <!-- Venmo Profile Link -->
   <a href="https://venmo.com/WaconiaWildcats_B2Gold" target="_blank" style="display:inline-block; margin:12px 0; color:#3d95ce; font-weight:bold;">Open Venmo Profile</a>
@@ -224,6 +233,12 @@ function openVenmoModal() {
 function closeVenmoModal() {
   document.getElementById("venmoModal").style.display = "none";
 }
+    function copyVenmoHandle() {
+  const handle = document.getElementById("venmoHandle").textContent;
+  navigator.clipboard.writeText(handle).then(() => {
+    alert(`Copied ${handle} to clipboard`);
+  });
+}
     function submitOrder(paymentMethod) {
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
@@ -250,11 +265,12 @@ function closeVenmoModal() {
         headers: { "Content-Type": "application/json" }
       })
       .then(res => res.text())
-      .then(msg => {
-        alert("Thank you! Your order has been submitted.");
-        cart.length = 0;
-        updateCartSummary();
-      })
+.then(msg => {
+  alert("✅ Order submitted!\n\nThank you for supporting Waconia Hockey B2 Gold!\nWe’ll be in touch with delivery or pickup details.");
+  cart.length = 0;
+  updateCartSummary();
+  closeVenmoModal(); // Optional: hide modal after submission
+})
       .catch(err => {
         console.error("Error submitting order:", err);
         alert("There was a problem submitting your order.");
