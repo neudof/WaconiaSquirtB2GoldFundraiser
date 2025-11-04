@@ -285,16 +285,6 @@ function submitOrder(paymentMethod) {
     alert("There was a problem submitting your order.");
   });
 }
-
-  // Submit via hidden form
-  document.getElementById("orderData").value = JSON.stringify(order);
-  document.getElementById("orderForm").submit();
-
-  alert("✅ Order submitted!\n\nThank you for supporting Waconia Hockey B2 Gold!\nWe’ll be in touch with delivery or pickup details.");
-  cart.length = 0;
-  updateCartSummary();
-  closeVenmoModal();
-}
     const pizzas = [
   {
     name: "Double Cheese Pizza",
@@ -393,23 +383,25 @@ function submitOrder(paymentMethod) {
     image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustChickenAlfredo.webp"
   }
 ];
-    const tileContainer = document.getElementById("pizzaTiles");
-    pizzas.forEach((pizza, index) => {
-      const qtyId = `qty${index}`;
-      const tile = document.createElement("div");
-      tile.className = "tile";
-      tile.innerHTML = `
-        <img src="${pizza.image}" alt="${pizza.name}" />
-        <h2>${pizza.name}</h2>
-        <p>${pizza.desc}</p>
-        <p><strong>$${pizza.price.toFixed(2)}</strong></p>
-        <select id="${qtyId}">
-          ${[...Array(10)].map((_, i) => `<option value="${i+1}">Qty: ${i+1}</option>`).join('')}
-        </select>
-        <button onclick="addToCart('${pizza.name}', ${pizza.price}, '${qtyId}')">Add to Cart</button>
-      `;
-      tileContainer.appendChild(tile);
-    });
+window.onload = function() {
+  const tileContainer = document.getElementById("pizzaTiles");
+  pizzas.forEach((pizza, index) => {
+    const qtyId = `qty${index}`;
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.innerHTML = `
+      <img src="${pizza.image}" alt="${pizza.name}" />
+      <h2>${pizza.name}</h2>
+      <p>${pizza.desc}</p>
+      <p><strong>$${pizza.price.toFixed(2)}</strong></p>
+      <select id="${qtyId}">
+        ${[...Array(10)].map((_, i) => `<option value="${i+1}">Qty: ${i+1}</option>`).join('')}
+      </select>
+      <button onclick="addToCart('${pizza.name}', ${pizza.price}, '${qtyId}')">Add to Cart</button>
+    `;
+    tileContainer.appendChild(tile);
+  });
+};
   </script>
 </body>
 </html>
