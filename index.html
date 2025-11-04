@@ -202,23 +202,103 @@
       cart.splice(index, 1);
       updateCartSummary();
 }
-    const pizzas = [
-  { name: "Double Cheese Pizza", price: 12.00, desc: "The ultimate cheese-lover's pizza, topped with cheddar and mozzarella.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DoubleCheese.webp" },
-  { name: "Pepperoni Pizza", price: 12.00, desc: "Covered from edge to edge with pepperoni and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Pepperoni.webp" },
-  { name: "Sausage Pizza", price: 12.00, desc: "Made with savory sausage and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage.webp" },
-  { name: "Sausage and Pepperoni Pizza", price: 13.00, desc: "Featuring sausage, pepperoni and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ausage&Pepperoni.webp" },
-  { name: "Sausage and Mushroom Pizza", price: 13.00, desc: "Loaded up with sausage, mushrooms and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ausage&Mushroom.webp" },
-  { name: "Inferno", price: 13.00, desc: "For those who like it spicy, a combo of sausage, pepperoni, mozzarella and just enough jalapeños to keep things interesting.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Inferno.webp" },
-  { name: "Deluxe Combo", price: 14.00, desc: "Made with sausage, pepperoni, onions, mushrooms and the freshest diced green peppers. Topped with plenty of mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DeluxeCombination.webp" },
-  { name: "Six Pack", price: 14.00, desc: "Made with 4 meats and 2 cheeses. Loaded with sausage, pepperoni, Canadian bacon, bacon, cheddar and mozzarella.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/SixPack.webp" },
-  { name: "BCB", price: 14.00, desc: "A Bacon Cheese Burger pizza topped with Beef, Cheese, & Bacon.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/BCB.webp" },
-  { name: "Chicken Alfredo Pizza", price: 14.00, desc: "Made with garlic chicken, creamy alfredo sauce and mozzarella cheese on a thick, seasoned, hand-stretched crust.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ChickenAlfredo.webp" },
-  { name: "Breakfast Pizza", price: 14.00, desc: "Country Sausage, Bacon, Scrambled Eggs, Green Onions, Cheddar & Mozzarella Cheeses with Country Gravy.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Breakfast.webp" },
-  { name: "El Jefe", price: 14.00, desc: "A Mexican style pizza topped with Chorizo, Jalapenos, Black Olives, Green Onions, Mozarella, and Cheddar Cheese", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ElJefe.webp" },
-  { name: "Italian Beef", price: 14.00, desc: "Sliced Beef, Giariniera, Sweety Drop Peppers and a Blend of Mozarella and Provolone Cheeses.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ItalianBeef.webp" },
-  { name: "Cauliflower Crust Sausage & Pepperoni", price: 14.75, desc: "Gluten-free Cauliflower crust pizza topped with sausage, pepperoni and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustSausage&Pepperoni.webp" },
-  { name: "Cauliflower Crust Margherita", price: 14.75, desc: "Gluten-free Cauliflower crust pizza topped with tomato, basil, garlic and sliced mozarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustMargherita.webp" },
-  { name: "Cauliflower Crust Chicken Alfredo", price: 14.75, desc: "Gluten-free Cauliflower crust pizza topped with white chicken, alfredo sauce and mozzarella cheese.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrusthickenAlfredo.webp" },
+const pizzas = [
+  {
+    name: "Double Cheese Pizza",
+    price: 12.00,
+    desc: "The ultimate cheese-lover's pizza, topped with cheddar and mozzarella.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DoubleCheese.webp"
+  },
+  {
+    name: "Pepperoni Pizza",
+    price: 12.00,
+    desc: "Covered from edge to edge with pepperoni and mozzarella cheese.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Pepperoni.webp"
+  },
+  {
+    name: "Sausage Pizza",
+    price: 12.00,
+    desc: "Made with savory sausage and mozzarella cheese.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage.webp"
+  },
+  {
+    name: "Sausage and Pepperoni Pizza",
+    price: 13.00,
+    desc: "Featuring sausage, pepperoni and mozzarella cheese.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage%26Pepperoni.webp"
+  },
+  {
+    name: "Sausage and Mushroom Pizza",
+    price: 13.00,
+    desc: "Loaded up with sausage, mushrooms and mozzarella cheese.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Sausage%26Mushroom.webp"
+  },
+  {
+    name: "Inferno",
+    price: 13.00,
+    desc: "For those who like it spicy, a combo of sausage, pepperoni, mozzarella and jalapeños.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Inferno.webp"
+  },
+  {
+    name: "Deluxe Combo",
+    price: 14.00,
+    desc: "Sausage, pepperoni, onions, mushrooms, green peppers, and mozzarella cheese.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/DeluxeCombination.webp"
+  },
+  {
+    name: "Six Pack",
+    price: 14.00,
+    desc: "Sausage, pepperoni, Canadian bacon, bacon, cheddar and mozzarella.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/SixPack.webp"
+  },
+  {
+    name: "BCB",
+    price: 14.00,
+    desc: "A Bacon Cheese Burger pizza topped with beef, cheese, and bacon.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/BCB.webp"
+  },
+  {
+    name: "Chicken Alfredo Pizza",
+    price: 14.00,
+    desc: "Garlic chicken, creamy alfredo sauce, and mozzarella on seasoned crust.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ChickenAlfredo.webp"
+  },
+  {
+    name: "Breakfast Pizza",
+    price: 14.00,
+    desc: "Sausage, bacon, scrambled eggs, green onions, cheddar, mozzarella, and country gravy.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/Breakfast.webp"
+  },
+  {
+    name: "El Jefe",
+    price: 14.00,
+    desc: "Chorizo, jalapeños, black olives, green onions, mozzarella, and cheddar.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ElJefe.webp"
+  },
+  {
+    name: "Italian Beef",
+    price: 14.00,
+    desc: "Sliced beef, giardiniera, sweety drop peppers, mozzarella and provolone.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/ItalianBeef.webp"
+  },
+  {
+    name: "Cauliflower Crust Sausage & Pepperoni",
+    price: 14.75,
+    desc: "Gluten-free crust topped with sausage, pepperoni, and mozzarella.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustSausage%26Pepperoni.webp"
+  },
+  {
+    name: "Cauliflower Crust Margherita",
+    price: 14.75,
+    desc: "Tomato, basil, garlic, and sliced mozzarella on gluten-free crust.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustMargherita.webp"
+  },
+  {
+    name: "Cauliflower Crust Chicken Alfredo",
+    price: 14.75,
+    desc: "White chicken, alfredo sauce, and mozzarella on gluten-free crust.",
+    image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustChickenAlfredo.webp"
+  }
 ];
 
 const tileContainer = document.getElementById("pizzaTiles");
