@@ -133,11 +133,7 @@
 
     <h3>Checkout</h3>
     <form id="checkoutForm" onsubmit="return false;">
-      <input type="text" id="name" placeholder="Your Name" required style="width:100%;margin:8px 0;padding:10px;" />
-      <input type="email" id="email" placeholder="Email" required style="width:100%;margin:8px 0;padding:10px;" />
-      <input type="tel" id="phone" placeholder="Phone Number" required style="width:100%;margin:8px 0;padding:10px;" />
-      <input type="text" id="address" placeholder="Delivery Address" required style="width:100%;margin:8px 0;padding:10px;" />
-      <select id="playerName" required style="width:100%;margin:8px 0;padding:10px;">
+            <select id="playerName" required style="width:100%;margin:8px 0;padding:10px;">
                 <option value="">Select Player</option>
                 <option value="Bode Braunwarth">Bode Braunwarth</option>
                 <option value="Cameron Hascall">Cameron Hascall</option>
@@ -152,7 +148,11 @@
                 <option value="McCoy Newell">McCoy Newell</option>
                 <option value="Ryan Kluge">Ryan Kluge</option>
                 <option value="Sawyer Hedlof">Sawyer Hedlof</option>
-  <!-- Add more players as needed -->
+                <!-- Add more players as needed -->
+      <input type="text" id="name" placeholder="Your Name" required style="width:100%;margin:8px 0;padding:10px;" />
+      <input type="email" id="email" placeholder="Email" required style="width:100%;margin:8px 0;padding:10px;" />
+      <input type="tel" id="phone" placeholder="Phone Number" required style="width:100%;margin:8px 0;padding:10px;" />
+      <input type="text" id="address" placeholder="Delivery Address" required style="width:100%;margin:8px 0;padding:10px;" />
 </select>
       <div style="margin-top:16px; display: flex; gap: 12px; flex-wrap: wrap;">
         <button onclick="openVenmoModal()" style="flex:1; padding:12px; background:#3d95ce; color:white; border:none; border-radius:6px;">Pay Now with Venmo</button>
