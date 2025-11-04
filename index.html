@@ -16,9 +16,14 @@
       margin-bottom: 24px;
     }
     .logo {
-      max-width: 120px;
+      max-width: 140px;
       height: auto;
       margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: 24px;
+      margin: 0;
+      color: #333;
     }
     .mission {
       max-width: 600px;
@@ -27,7 +32,7 @@
       text-align: center;
       color: #444;
     }
-    .item {
+    .tile {
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -36,73 +41,57 @@
       margin: 24px auto;
       text-align: center;
     }
-    .item img {
+    .tile img {
       width: 100%;
       border-radius: 8px;
+      margin-bottom: 12px;
     }
-    .item h2 {
-      margin: 12px 0 8px;
-      font-size: 24px;
-    }
-    .item p {
+    .tile h2 {
       margin: 8px 0;
+      font-size: 20px;
+    }
+    .tile p {
+      margin: 6px 0;
       font-size: 16px;
     }
-    .item button {
-      margin: 8px 4px;
+    .tile input[type="number"], .tile select, .tile button {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .tile button {
+      background-color: #3d95ce;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #cartPrompt {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 999;
+      text-align: center;
+    }
+    #cartPrompt button {
+      margin: 8px;
       padding: 10px 16px;
       font-size: 16px;
-      border: none;
       border-radius: 6px;
-      cursor: pointer;
-      background-color: #3d95ce;
-      color: white;
-    }
-    .cart-summary {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 16px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .cart-summary h2 {
-      text-align: center;
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin: 8px 0;
-    }
-    .cart-total {
-      font-weight: bold;
-      text-align: right;
-      margin-top: 12px;
-    }
-    .checkout-options {
-      margin-top: 16px;
-      text-align: center;
-    }
-    .checkout-options input {
-      margin-right: 8px;
-    }
-    .checkout-options button {
-      margin-top: 12px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #3d95ce;
-      color: white;
       border: none;
-      border-radius: 6px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-<nav style="position:sticky;top:0;background:#fff;padding:10px;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,0.1);z-index:100;">
-  <a href="#items-container" style="margin:0 12px;">Pizza Menu</a>
-  <a href="#cart-summary" style="margin:0 12px;">Cart</a>
-</nav>
+
   <header class="page-header">
     <img src="https://ssprodst.blob.core.windows.net/logos/357/57fe989a-53fb-4800-8a8a-43c5b406ec0d-04-29-2025-02-33-35-813.png" alt="Waconia Hockey Logo" class="logo" />
     <h1>Waconia Hockey B1 Gold Pizza Fundraiser</h1>
@@ -112,82 +101,89 @@
     <p>Your purchase helps fund tournaments and activities for the 2025/2026 season. Thank you for your support!</p>
   </section>
 
-  <div id="items-container">
-    <!-- Pizza items will be injected here by JavaScript -->
+  <!-- Donation Tile -->
+  <div class="tile">
+    <img src="https://fieldelectronicdrums.com/wp-content/uploads/2018/08/donate.jpg" alt="Donation" />
+    <h2>Support Without Pizza</h2>
+    <p>If you don't want pizza but still want to support the team.</p>
+    <input type="number" id="donationAmount" min="1" placeholder="Enter donation amount ($)" />
+    <button onclick="addDonation()">Add to Cart</button>
   </div>
 
-  <div class="cart-summary" id="cart-summary" style="display:none;">
-    <h2>Your Cart</h2>
-    <div id="cart-items"></div>
-    <div class="cart-total" id="cart-total"></div>
-    <div class="checkout-options">
-      <label><input type="radio" name="payment" value="venmo" checked /> Pay with Venmo</label>
-      <label><input type="radio" name="payment" value="delivery" /> Pay on Delivery</label>
-      <button onclick="submitOrder()">Submit Order</button>
-    </div>
+  <!-- Pizza Tiles -->
+  <div id="pizzaTiles"></div>
+
+  <div id="cartPrompt">
+    <p id="cartPromptText"></p>
+    <button onclick="closeCartPrompt()">Continue Shopping</button>
+    <button onclick="goToCheckout()">Go to Checkout</button>
   </div>
 
   <script>
-    const items = [
-      { name: "Cheese Pizza", price: 12, image: "https://via.placeholder.com/400x300?text=Cheese+Pizza" },
-      { name: "Pepperoni Pizza", price: 13, image: "https://via.placeholder.com/400x300?text=Pepperoni+Pizza" },
-      { name: "Sausage Pizza", price: 13, image: "https://via.placeholder.com/400x300?text=Sausage+Pizza" },
-      { name: "Canadian Bacon Pizza", price: 13, image: "https://via.placeholder.com/400x300?text=Canadian+Bacon+Pizza" },
-      { name: "Deluxe Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Deluxe+Pizza" },
-      { name: "Meat Lovers Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Meat+Lovers+Pizza" },
-      { name: "Veggie Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Veggie+Pizza" },
-      { name: "Buffalo Chicken Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Buffalo+Chicken+Pizza" },
-      { name: "BBQ Chicken Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=BBQ+Chicken+Pizza" },
-      { name: "Chicken Alfredo Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Chicken+Alfredo+Pizza" },
-      { name: "Mac & Cheese Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Mac+and+Cheese+Pizza" },
-      { name: "Pickle Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Pickle+Pizza" },
-      { name: "Breakfast Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Breakfast+Pizza" },
-      { name: "Cauliflower Crust Cheese", price: 13, image: "https://via.placeholder.com/400x300?text=Cauliflower+Cheese+Pizza" },
-      { name: "Cauliflower Crust Pepperoni", price: 14, image: "https://via.placeholder.com/400x300?text=Cauliflower+Pepperoni+Pizza" },
-      { name: "Cauliflower Crust Sausage", price: 14, image: "https://via.placeholder.com/400x300?text=Cauliflower+Sausage+Pizza" },
-      { name: "Donation Only", price: 5, image: "https://via.placeholder.com/400x300?text=Donation" }
-    ];
-
     const cart = [];
 
-    function renderItems() {
-      const container = document.getElementById("items-container");
-      items.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `
-          <img src="${item.image}" alt="${item.name}" />
-          <h2>${item.name}</h2>
-          <p><strong>$${item.price.toFixed(2)}</strong></p>
-          <button onclick="addToCart('${item.name}', ${item.price})">Add to Cart</button>
-        `;
-        container.appendChild(div);
-      });
+    function addToCart(name, price, qtyId) {
+      const quantity = parseInt(document.getElementById(qtyId).value);
+      cart.push({ name, price, quantity });
+      document.getElementById("cartPromptText").textContent = `${quantity} x ${name} added to cart`;
+      document.getElementById("cartPrompt").style.display = "block";
+      console.log("Cart:", cart);
     }
 
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      alert(`${name} added to cart`);
-      updateCart();
+    function addDonation() {
+      const amount = parseFloat(document.getElementById("donationAmount").value);
+      if (isNaN(amount) || amount < 1) {
+        alert("Please enter a donation amount of at least $1");
+        return;
+      }
+      cart.push({ name: "Donation", price: amount, quantity: 1 });
+      document.getElementById("cartPromptText").textContent = `$${amount.toFixed(2)} donation added to cart`;
+      document.getElementById("cartPrompt").style.display = "block";
+      console.log("Cart:", cart);
     }
 
-    function updateCart() {
-      const cartSummary = document.getElementById("cart-summary");
-      const cartItems = document.getElementById("cart-items");
-      const cartTotal = document.getElementById("cart-total");
-      cartItems.innerHTML = "";
-      let total = 0;
+    function closeCartPrompt() {
+      document.getElementById("cartPrompt").style.display = "none";
+    }
 
-      cart.forEach((item, index) => {
-        total += item.price;
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <span>${item.name} - $${item.price.toFixed(2)}</span>
-          <button onclick="removeFromCart(${index})">Remove</button>
-        `;
-        cartItems.appendChild(div);
-      });
+    function goToCheckout() {
+      document.getElementById("cartPrompt").style.display = "none";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
 
-      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
-      cartSummary.style.display = cart.length > 0 ? "block" : "none";
+    const pizzas = [
+      { name: "Cheese Pizza", price: 12, desc: "Classic mozzarella and tomato sauce" },
+      { name: "Pepperoni Pizza", price: 13, desc: "Loaded with pepperoni and cheese" },
+      { name: "Sausage Pizza", price: 13, desc: "Savory sausage and cheese" },
+      { name: "Canadian Bacon Pizza", price: 13, desc: "Smoky Canadian bacon and mozzarella" },
+      { name: "Deluxe Pizza", price: 15, desc: "Pepperoni, sausage, green pepper, onion, mushroom" },
+      { name: "Meat Lovers Pizza", price: 15, desc: "Pepperoni, sausage, bacon, Canadian bacon" },
+      { name: "Veggie Pizza", price: 14, desc: "Green pepper, onion, mushroom, black olive" },
+      { name: "Buffalo Chicken Pizza", price: 15, desc: "Buffalo sauce, chicken, cheese" },
+      { name: "BBQ Chicken Pizza", price: 15, desc: "BBQ sauce, chicken, onion, cheese" },
+      { name: "Chicken Alfredo Pizza", price: 15, desc: "Alfredo sauce, chicken, cheese" },
+      { name: "Mac & Cheese Pizza", price: 14, desc: "Creamy mac & cheese on a pizza crust" },
+      { name: "Pickle Pizza", price: 14, desc: "Dill pickles, garlic sauce, mozzarella" },
+      { name: "Breakfast Pizza", price: 14, desc: "Egg, sausage, cheese, hash browns" },
+      { name: "Cauliflower Crust Cheese", price: 13, desc: "Gluten-free cheese pizza" },
+      { name: "Cauliflower Crust Pepperoni", price: 14, desc: "Gluten-free pepperoni pizza" },
+      { name: "Cauliflower Crust Sausage", price: 14, desc: "Gluten-free sausage pizza" }
+    ];
+
+const tileContainer = document.getElementById("pizzaTiles");
+pizzas.forEach((pizza, index) => {
+  const qtyId = `qty${index}`;
+  const tile = document.createElement("div");
+  tile.className = "tile";
+  tile.innerHTML = `
+    <img src="https://via.placeholder.com/400x300?text=${encodeURIComponent(pizza.name)}" alt="${pizza.name}" />
+    <h2>${pizza.name}</h2>
+    <p>${pizza.desc}</p>
+    <p><strong>$${pizza.price.toFixed(2)}</strong></p>
+    <select id="${qtyId}">
+      ${[...Array(10)].map((_, i) => `<option value="${i+1}">Qty: ${i+1}</option>`).join('')}
+    </select>
+    <button onclick="addToCart('${pizza.name}', ${pizza.price}, '${qtyId}')">Add to Cart</button>
+  `;
+  tileContainer.appendChild(tile);
+});
