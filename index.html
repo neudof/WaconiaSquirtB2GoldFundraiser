@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waconia Hockey B1 Gold Pizza Fundraiser</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #f9f9f9;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .logo {
+      max-width: 120px;
+      height: auto;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: 22px;
+      margin: 0;
+      color: #333;
+    }
+    @media (min-width: 600px) {
+      .page-header h1 {
+        font-size: 28px;
+      }
+      .logo {
+        max-width: 160px;
+      }
+    }
+    .mission {
+      max-width: 600px;
+      margin: 0 auto 24px;
+      font-size: 16px;
+      text-align: center;
+      color: #444;
+    }
+    .item {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 16px;
+      max-width: 400px;
+      margin: 24px auto;
+      text-align: center;
+    }
+    .item img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .item h2 {
+      margin: 12px 0 8px;
+      font-size: 24px;
+    }
+    .item p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    .item button {
+      margin: 8px 4px;
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #3d95ce;
+      color: white;
+    }
+    .checkout {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 16px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .checkout h2 {
+      margin-bottom: 8px;
+    }
+    .checkout p {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    .checkout input {
+      display: block;
+      width: 90%;
+      margin: 8px auto;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .checkout button {
+      margin-top: 12px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3d95ce;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <img src="https://ssprodst.blob.core.windows.net/logos/357/57fe989a-53fb-4800-8a8a-43c5b406ec0d-04-29-2025-02-33-35-813.png" alt="Waconia Hockey Logo" class="logo" />
+    <h1>Waconia Hockey B1 Gold Pizza Fundraiser</h1>
+  </header>
+
+  <section class="mission">
+    <p>Your purchase will help the B2 Gold hockey team fund their tournaments and activities for the 2025/2026 hockey season. Thank you for your support! If you don't care for pizza, you can make a donation using the option below.</p>
+  </section>
+
+  <!-- Item 1: Donation -->
+  <div class="item">
+    <img src="https://fieldelectronicdrums.com/wp-content/uploads/2018/08/donate.jpg" alt="Donation Support" />
+    <h2>I don't like pizza donation</h2>
+    <p>If you don't care for pizza but want to make a donation to support the team.</p>
+    <p><strong>Suggested minimum:</strong> $5.00</p>
+    <input type="number" id="donationAmount" min="5" placeholder="Enter amount ($)" style="padding:8px; width:80%; margin:8px 0;" />
+    <button onclick="donateWithVenmo()">Donate with Venmo</button>
+  </div>
+
+  <!-- Items 2–17: Pizza Items -->
+  <!-- Paste your 16 pizza items here with updated Venmo links using @WaconiaWildcats_B2Gold -->
+
+  <!-- Checkout Form -->
+  <section class="checkout">
+    <h2>Complete Your Order</h2>
+    <p><strong>Orders close on November 18th.</strong> Local orders will be delivered on December 3rd.</p>
+    <form id="orderForm">
+      <input type="text" name="name" placeholder="First and Last Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <input type="tel" name="phone" placeholder="Phone Number" required />
+      <input type="text" name="address" placeholder="Delivery Address" required />
+      <input type="text" name="item" placeholder="Item Ordered" required />
+      <input type="number" name="amount" id="amount" placeholder="Amount ($)" required min="5" />
+      <label style="display:block; margin-top:12px;">
+        <input type="checkbox" id="payLater" /> I will pay on delivery or pickup
+      </label>
+      <button type="submit">Submit Order Info</button>
+    </form>
+  </section>
+
+  <script>
+    function donateWithVenmo() {
+      const amount = document.getElementById("donationAmount").value;
+      if (amount >= 5) {
+        window.open(`https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=${amount}&note=Donation+to+B2+Gold+Hockey`, "_blank");
+      } else {
+        alert("Please enter a donation amount of $5 or more.");
+      }
+    }
+
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const payLater = document.getElementById("payLater").checked;
+      data.paidWithVenmo = !payLater;
+      data.amountPaid = payLater ? "0.00" : data.amount;
+
+      fetch("YOUR_WEB_APP_URL", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.text())
+      .then(msg => alert("Order submitted successfully!"))
+      .catch(err => alert("Error submitting order."));
+    });
+  </script>
+
+</body>
+</html>
