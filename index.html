@@ -113,10 +113,31 @@
   <!-- Pizza Tiles -->
   <div id="pizzaTiles"></div>
 
+  <!-- Cart Prompt Modal -->
   <div id="cartPrompt">
     <p id="cartPromptText"></p>
     <button onclick="closeCartPrompt()">Continue Shopping</button>
     <button onclick="goToCheckout()">Go to Checkout</button>
+  </div>
+
+  <!-- Cart Summary + Checkout -->
+  <div id="cartSummary" style="display:none;max-width:600px;margin:40px auto;padding:20px;background:#fff;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <p id="cartTotal" style="font-weight:bold;text-align:right;margin-top:12px;"></p>
+
+    <h3>Checkout</h3>
+    <form id="checkoutForm" onsubmit="submitOrder(); return false;">
+      <input type="text" id="name" placeholder="Your Name" required style="width:100%;margin:8px 0;padding:10px;" />
+      <input type="email" id="email" placeholder="Email" required style="width:100%;margin:8px 0;padding:10px;" />
+      <input type="tel" id="phone" placeholder="Phone Number" required style="width:100%;margin:8px 0;padding:10px;" />
+      <input type="text" id="address" placeholder="Delivery Address" required style="width:100%;margin:8px 0;padding:10px;" />
+
+      <label><input type="radio" name="payment" value="venmo" checked /> Pay with Venmo (@WaconiaHockeyB1Gold)</label><br />
+      <label><input type="radio" name="payment" value="delivery" /> Pay on Delivery/Pickup</label><br />
+
+      <button type="submit" style="margin-top:12px;padding:10px 20px;background:#3d95ce;color:white;border:none;border-radius:6px;">Submit Order</button>
+    </form>
   </div>
 
   <script>
@@ -127,7 +148,7 @@
       cart.push({ name, price, quantity });
       document.getElementById("cartPromptText").textContent = `${quantity} x ${name} added to cart`;
       document.getElementById("cartPrompt").style.display = "block";
-      console.log("Cart:", cart);
+      updateCartSummary();
     }
 
     function addDonation() {
@@ -139,7 +160,7 @@
       cart.push({ name: "Donation", price: amount, quantity: 1 });
       document.getElementById("cartPromptText").textContent = `$${amount.toFixed(2)} donation added to cart`;
       document.getElementById("cartPrompt").style.display = "block";
-      console.log("Cart:", cart);
+      updateCartSummary();
     }
 
     function closeCartPrompt() {
@@ -151,24 +172,54 @@
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
+    function updateCartSummary() {
+      const cartSummary = document.getElementById("cartSummary");
+      const cartItems = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        const div = document.createElement("div");
+        div.style.display = "flex";
+        div.style.justifyContent = "space-between";
+        div.style.margin = "8px 0";
+        div.innerHTML = `
+          <span>${item.quantity} x ${item.name} - $${itemTotal.toFixed(2)}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItems.appendChild(div);
+      });
+
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+      cartSummary.style.display = cart.length > 0 ? "block" : "none";
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartSummary();
+}
     const pizzas = [
-      { name: "Cheese Pizza", price: 12, desc: "Classic mozzarella and tomato sauce" },
-      { name: "Pepperoni Pizza", price: 13, desc: "Loaded with pepperoni and cheese" },
-      { name: "Sausage Pizza", price: 13, desc: "Savory sausage and cheese" },
-      { name: "Canadian Bacon Pizza", price: 13, desc: "Smoky Canadian bacon and mozzarella" },
-      { name: "Deluxe Pizza", price: 15, desc: "Pepperoni, sausage, green pepper, onion, mushroom" },
-      { name: "Meat Lovers Pizza", price: 15, desc: "Pepperoni, sausage, bacon, Canadian bacon" },
-      { name: "Veggie Pizza", price: 14, desc: "Green pepper, onion, mushroom, black olive" },
-      { name: "Buffalo Chicken Pizza", price: 15, desc: "Buffalo sauce, chicken, cheese" },
-      { name: "BBQ Chicken Pizza", price: 15, desc: "BBQ sauce, chicken, onion, cheese" },
-      { name: "Chicken Alfredo Pizza", price: 15, desc: "Alfredo sauce, chicken, cheese" },
-      { name: "Mac & Cheese Pizza", price: 14, desc: "Creamy mac & cheese on a pizza crust" },
-      { name: "Pickle Pizza", price: 14, desc: "Dill pickles, garlic sauce, mozzarella" },
-      { name: "Breakfast Pizza", price: 14, desc: "Egg, sausage, cheese, hash browns" },
-      { name: "Cauliflower Crust Cheese", price: 13, desc: "Gluten-free cheese pizza" },
-      { name: "Cauliflower Crust Pepperoni", price: 14, desc: "Gluten-free pepperoni pizza" },
-      { name: "Cauliflower Crust Sausage", price: 14, desc: "Gluten-free sausage pizza" }
-    ];
+  { name: "Cheese Pizza", price: 12, desc: "Classic mozzarella and tomato sauce" },
+  { name: "Pepperoni Pizza", price: 13, desc: "Loaded with pepperoni and cheese" },
+  { name: "Sausage Pizza", price: 13, desc: "Savory sausage and cheese" },
+  { name: "Canadian Bacon Pizza", price: 13, desc: "Smoky Canadian bacon and mozzarella" },
+  { name: "Deluxe Pizza", price: 15, desc: "Pepperoni, sausage, green pepper, onion, mushroom" },
+  { name: "Meat Lovers Pizza", price: 15, desc: "Pepperoni, sausage, bacon, Canadian bacon" },
+  { name: "Veggie Pizza", price: 14, desc: "Green pepper, onion, mushroom, black olive" },
+  { name: "Buffalo Chicken Pizza", price: 15, desc: "Buffalo sauce, chicken, cheese" },
+  { name: "BBQ Chicken Pizza", price: 15, desc: "BBQ sauce, chicken, onion, cheese" },
+  { name: "Chicken Alfredo Pizza", price: 15, desc: "Alfredo sauce, chicken, cheese" },
+  { name: "Mac & Cheese Pizza", price: 14, desc: "Creamy mac & cheese on a pizza crust" },
+  { name: "Pickle Pizza", price: 14, desc: "Dill pickles, garlic sauce, mozzarella" },
+  { name: "Breakfast Pizza", price: 14, desc: "Egg, sausage, cheese, hash browns" },
+  { name: "Cauliflower Crust Cheese", price: 13, desc: "Gluten-free cheese pizza" },
+  { name: "Cauliflower Crust Pepperoni", price: 14, desc: "Gluten-free pepperoni pizza" },
+  { name: "Cauliflower Crust Sausage", price: 14, desc: "Gluten-free sausage pizza" }
+];
 
 const tileContainer = document.getElementById("pizzaTiles");
 pizzas.forEach((pizza, index) => {
@@ -187,3 +238,6 @@ pizzas.forEach((pizza, index) => {
   `;
   tileContainer.appendChild(tile);
 });
+    </script>
+</body>
+</html>
