@@ -20,19 +20,6 @@
       height: auto;
       margin-bottom: 12px;
     }
-    .page-header h1 {
-      font-size: 22px;
-      margin: 0;
-      color: #333;
-    }
-    @media (min-width: 600px) {
-      .page-header h1 {
-        font-size: 28px;
-      }
-      .logo {
-        max-width: 160px;
-      }
-    }
     .mission {
       max-width: 600px;
       margin: 0 auto 24px;
@@ -71,33 +58,35 @@
       background-color: #3d95ce;
       color: white;
     }
-    .checkout {
-      max-width: 500px;
+    .cart-summary {
+      max-width: 600px;
       margin: 40px auto;
       padding: 16px;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .cart-summary h2 {
       text-align: center;
     }
-    .checkout h2 {
-      margin-bottom: 8px;
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
     }
-    .checkout p {
-      font-size: 16px;
-      margin-bottom: 16px;
-      color: #333;
+    .cart-total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 12px;
     }
-    .checkout input {
-      display: block;
-      width: 90%;
-      margin: 8px auto;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+    .checkout-options {
+      margin-top: 16px;
+      text-align: center;
     }
-    .checkout button {
+    .checkout-options input {
+      margin-right: 8px;
+    }
+    .checkout-options button {
       margin-top: 12px;
       padding: 10px 20px;
       font-size: 16px;
@@ -117,192 +106,85 @@
   </header>
 
   <section class="mission">
-    <p>Your purchase will help the B2 Gold hockey team fund their tournaments and activities for the 2025/2026 hockey season. Thank you for your support! If you don't care for pizza, you can make a donation using the option below.</p>
+    <p>Your purchase helps fund tournaments and activities for the 2025/2026 season. Thank you for your support!</p>
   </section>
 
-  <div class="item">
-    <img src="https://fieldelectronicdrums.com/wp-content/uploads/2018/08/donate.jpg" alt="Donation Support" />
-    <h2>I don't like pizza donation</h2>
-    <p>If you don't care for pizza but want to make a donation to support the team.</p>
-    <p><strong>Suggested minimum:</strong> $5.00</p>
-    <input type="number" id="donationAmount" min="5" placeholder="Enter amount ($)" style="padding:8px; width:80%; margin:8px 0;" />
-    <button onclick="donateWithVenmo()">Donate with Venmo</button>
+  <div id="items-container">
+    <!-- Pizza items will be injected here by JavaScript -->
   </div>
 
- <!-- Item 2 -->
-<div class="item">
-  <h2>Cheese Pizza</h2>
-  <p>Classic mozzarella and tomato sauce</p>
-  <p><strong>$12.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=12&note=Cheese+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 3 -->
-<div class="item">
-  <h2>Pepperoni Pizza</h2>
-  <p>Loaded with pepperoni and cheese</p>
-  <p><strong>$13.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=13&note=Pepperoni+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 4 -->
-<div class="item">
-  <h2>Sausage Pizza</h2>
-  <p>Italian sausage and mozzarella</p>
-  <p><strong>$13.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=13&note=Sausage+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 5 -->
-<div class="item">
-  <h2>Canadian Bacon Pizza</h2>
-  <p>Smoky Canadian bacon and cheese</p>
-  <p><strong>$13.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=13&note=Canadian+Bacon+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 6 -->
-<div class="item">
-  <h2>Deluxe Pizza</h2>
-  <p>Pepperoni, sausage, green pepper, onion, mushroom</p>
-  <p><strong>$15.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=15&note=Deluxe+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 7 -->
-<div class="item">
-  <h2>Meat Lovers Pizza</h2>
-  <p>Pepperoni, sausage, Canadian bacon, beef</p>
-  <p><strong>$15.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=15&note=Meat+Lovers+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 8 -->
-<div class="item">
-  <h2>Veggie Pizza</h2>
-  <p>Green pepper, onion, mushroom, black olive</p>
-  <p><strong>$14.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=14&note=Veggie+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 9 -->
-<div class="item">
-  <h2>Buffalo Chicken Pizza</h2>
-  <p>Buffalo sauce, chicken, onion, mozzarella</p>
-  <p><strong>$15.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=15&note=Buffalo+Chicken+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 10 -->
-<div class="item">
-  <h2>BBQ Chicken Pizza</h2>
-  <p>BBQ sauce, chicken, onion, mozzarella</p>
-  <p><strong>$15.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=15&note=BBQ+Chicken+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 11 -->
-<div class="item">
-  <h2>Chicken Alfredo Pizza</h2>
-  <p>Alfredo sauce, chicken, mozzarella</p>
-  <p><strong>$15.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=15&note=Chicken+Alfredo+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 12 -->
-<div class="item">
-  <h2>Mac & Cheese Pizza</h2>
-  <p>Cheesy macaroni on a pizza crust</p>
-  <p><strong>$14.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=14&note=Mac+and+Cheese+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 13 -->
-<div class="item">
-  <h2>Pickle Pizza</h2>
-  <p>Garlic sauce, dill pickles, mozzarella</p>
-  <p><strong>$14.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=14&note=Pickle+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 14 -->
-<div class="item">
-  <h2>Breakfast Pizza</h2>
-  <p>Egg, sausage, cheese, and gravy base</p>
-  <p><strong>$14.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=14&note=Breakfast+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 15 -->
-<div class="item">
-  <h2>Cauliflower Crust Cheese</h2>
-  <p>Gluten-free cauliflower crust with cheese</p>
-  <p><strong>$13.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=13&note=Cauliflower+Crust+Cheese+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 16 -->
-<div class="item">
-  <h2>Cauliflower Crust Pepperoni</h2>
-  <p>Gluten-free cauliflower crust with pepperoni</p>
-  <p><strong>$14.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=14&note=Cauliflower+Crust+Pepperoni+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-<!-- Item 17 -->
-<div class="item">
-  <h2>Cauliflower Crust Sausage</h2>
-  <p>Gluten-free cauliflower crust with sausage</p>
-  <p><strong>$14.00</strong></p>
-  <button onclick="window.open('https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=14&note=Cauliflower+Crust+Sausage+Pizza', '_blank')">Pay with Venmo</button>
-</div>
-
-  <section class="checkout">
-    <h2>Complete Your Order</h2>
-    <p><strong>Orders close on November 18th.</strong> Local orders will be delivered on December 3rd.</p>
-    <form id="orderForm">
-      <input type="text" name="name" placeholder="First and Last Name" required />
-      <input type="email" name="email" placeholder="Email Address" required />
-      <input type="tel" name="phone" placeholder="Phone Number" required />
-      <input type="text" name="address" placeholder="Delivery Address" required />
-      <input type="text" name="item" placeholder="Item Ordered" required />
-      <input type="number" name="amount" id="amount" placeholder="Amount ($)" required min="5" />
-      <label style="display:block; margin-top:12px;">
-        <input type="checkbox" id="payLater" /> I will pay on delivery or pickup
-      </label>
-      <button type="submit">Submit Order Info</button>
-    </form>
-  </section>
+  <div class="cart-summary" id="cart-summary" style="display:none;">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total"></div>
+    <div class="checkout-options">
+      <label><input type="radio" name="payment" value="venmo" checked /> Pay with Venmo</label>
+      <label><input type="radio" name="payment" value="delivery" /> Pay on Delivery</label>
+      <button onclick="submitOrder()">Submit Order</button>
+    </div>
+  </div>
 
   <script>
-    function donateWithVenmo() {
-      const amount = document.getElementById("donationAmount").value;
-      if (amount >= 5) {
-        window.open(`https://venmo.com/WaconiaWildcats_B2Gold?txn=pay&amount=${amount}&note=Donation+to+B2+Gold+Hockey`, "_blank");
-      } else {
-        alert("Please enter a donation amount of $5 or more.");
-      }
+    const items = [
+      { name: "Cheese Pizza", price: 12, image: "https://via.placeholder.com/400x300?text=Cheese+Pizza" },
+      { name: "Pepperoni Pizza", price: 13, image: "https://via.placeholder.com/400x300?text=Pepperoni+Pizza" },
+      { name: "Sausage Pizza", price: 13, image: "https://via.placeholder.com/400x300?text=Sausage+Pizza" },
+      { name: "Canadian Bacon Pizza", price: 13, image: "https://via.placeholder.com/400x300?text=Canadian+Bacon+Pizza" },
+      { name: "Deluxe Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Deluxe+Pizza" },
+      { name: "Meat Lovers Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Meat+Lovers+Pizza" },
+      { name: "Veggie Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Veggie+Pizza" },
+      { name: "Buffalo Chicken Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Buffalo+Chicken+Pizza" },
+      { name: "BBQ Chicken Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=BBQ+Chicken+Pizza" },
+      { name: "Chicken Alfredo Pizza", price: 15, image: "https://via.placeholder.com/400x300?text=Chicken+Alfredo+Pizza" },
+      { name: "Mac & Cheese Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Mac+and+Cheese+Pizza" },
+      { name: "Pickle Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Pickle+Pizza" },
+      { name: "Breakfast Pizza", price: 14, image: "https://via.placeholder.com/400x300?text=Breakfast+Pizza" },
+      { name: "Cauliflower Crust Cheese", price: 13, image: "https://via.placeholder.com/400x300?text=Cauliflower+Cheese+Pizza" },
+      { name: "Cauliflower Crust Pepperoni", price: 14, image: "https://via.placeholder.com/400x300?text=Cauliflower+Pepperoni+Pizza" },
+      { name: "Cauliflower Crust Sausage", price: 14, image: "https://via.placeholder.com/400x300?text=Cauliflower+Sausage+Pizza" },
+      { name: "Donation Only", price: 5, image: "https://via.placeholder.com/400x300?text=Donation" }
+    ];
+
+    const cart = [];
+
+    function renderItems() {
+      const container = document.getElementById("items-container");
+      items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" />
+          <h2>${item.name}</h2>
+          <p><strong>$${item.price.toFixed(2)}</strong></p>
+          <button onclick="addToCart('${item.name}', ${item.price})">Add to Cart</button>
+        `;
+        container.appendChild(div);
+      });
     }
 
-    document.getElementById("orderForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      alert(`${name} added to cart`);
+      updateCart();
+    }
 
-      const payLater = document.getElementById("payLater").checked;
-      data.paidWithVenmo = !payLater;
-      data.amountPaid = payLater ? "0.00" : data.amount;
+    function updateCart() {
+      const cartSummary = document.getElementById("cart-summary");
+      const cartItems = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+      cartItems.innerHTML = "";
+      let total = 0;
 
-      fetch("YOUR_WEB_APP_URL", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(res => res.text())
-      .then(msg => alert("Order submitted successfully!"))
-      .catch(err => alert("Error submitting order."));
-    });
-  </script>
+      cart.forEach((item, index) => {
+        total += item.price;
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <span>${item.name} - $${item.price.toFixed(2)}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItems.appendChild(div);
+      });
 
-</body>
-</html>
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+      cartSummary.style.display = cart.length > 0 ? "block" : "none";
