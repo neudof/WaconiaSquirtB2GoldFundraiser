@@ -264,6 +264,28 @@ function submitOrder(paymentMethod) {
     items: cart
   };
 
+  fetch("https://script.google.com/macros/s/AKfycbxwRSjJe-xgTWLmEvhs7RjJMh80C4nxqIgq8232kqJ_Dw13fUUrtSwz04kWAf7WBfvg/exec", {
+    method: "POST",
+    body: JSON.stringify({ order: JSON.stringify(order) }),
+    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+  })
+  .then(res => res.text())
+  .then(msg => {
+    if (msg.includes("Order received")) {
+      alert("✅ Order submitted!\n\nThank you for supporting Waconia Hockey B2 Gold!\nWe’ll be in touch with delivery or pickup details.");
+      cart.length = 0;
+      updateCartSummary();
+      closeVenmoModal();
+    } else {
+      alert("⚠️ Something went wrong: " + msg);
+    }
+  })
+  .catch(err => {
+    console.error("Error submitting order:", err);
+    alert("There was a problem submitting your order.");
+  });
+}
+
   // Submit via hidden form
   document.getElementById("orderData").value = JSON.stringify(order);
   document.getElementById("orderForm").submit();
@@ -389,9 +411,5 @@ function submitOrder(paymentMethod) {
       tileContainer.appendChild(tile);
     });
   </script>
-  <!-- Hidden form for order submission -->
-<form id="orderForm" action="https://script.google.com/macros/s/AKfycbxwRSjJe-xgTWLmEvhs7RjJMh80C4nxqIgq8232kqJ_Dw13fUUrtSwz04kWAf7WBfvg/exec" method="POST" style="display:none;">
-  <input type="hidden" name="order" id="orderData" />
-</form>
 </body>
 </html>
