@@ -134,12 +134,19 @@
       <input type="text" id="address" placeholder="Delivery Address" required style="width:100%;margin:8px 0;padding:10px;" />
 
       <div style="margin-top:16px; display: flex; gap: 12px; flex-wrap: wrap;">
-        <button onclick="submitOrder('venmo')" style="flex:1; padding:12px; background:#3d95ce; color:white; border:none; border-radius:6px;">Pay Now with Venmo</button>
+        <button onclick="openVenmoModal()" style="flex:1; padding:12px; background:#3d95ce; color:white; border:none; border-radius:6px;">Pay Now with Venmo</button>
         <button onclick="submitOrder('delivery')" style="flex:1; padding:12px; background:#555; color:white; border:none; border-radius:6px;">Pay on Pickup/Delivery (Cash or Check)</button>
       </div>
     </form>
   </div>
-
+<!-- Venmo Payment Modal -->
+<div id="venmoModal" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:#fff; padding:24px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.2); z-index:1000; max-width:400px; text-align:center;">
+  <h3>Send Payment via Venmo</h3>
+  <p>Please send your total to <strong>@WaconiaWildcats_B2Gold</strong> and include your name in the notes.</p>
+  <p id="venmoAmount" style="font-weight:bold; margin:12px 0;"></p>
+  <button onclick="submitOrder('venmo')" style="padding:10px 16px; background:#3d95ce; color:white; border:none; border-radius:6px;">I’ve Paid — Submit My Order</button>
+  <button onclick="closeVenmoModal()" style="margin-top:8px; padding:8px 12px;">Cancel</button>
+</div>
   <!-- Script Block -->
   <script>
     const cart = [];
@@ -203,7 +210,15 @@
       cart.splice(index, 1);
       updateCartSummary();
     }
+function openVenmoModal() {
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  document.getElementById("venmoAmount").textContent = `Total: $${total.toFixed(2)}`;
+  document.getElementById("venmoModal").style.display = "block";
+}
 
+function closeVenmoModal() {
+  document.getElementById("venmoModal").style.display = "none";
+}
     function submitOrder(paymentMethod) {
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
