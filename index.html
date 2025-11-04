@@ -208,4 +208,60 @@
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
       const phone = document.getElementById("phone").value.trim();
-      const address = document.getElementById
+      const address = document.getElementById("address").value.trim();
+
+      if (!name || !email || !phone || !address) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      const order = {
+        name,
+        email,
+        phone,
+        address,
+        payment: paymentMethod,
+        items: cart
+      };
+
+      fetch("YOUR_WEB_APP_URL_HERE", {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert("Thank you! Your order has been submitted.");
+        cart.length = 0;
+        updateCartSummary();
+      })
+      .catch(err => {
+        console.error("Error submitting order:", err);
+        alert("There was a problem submitting your order.");
+      });
+    }
+
+    const pizzas = [
+      // ✅ Your full pizza array goes here — already included above
+    ];
+
+    const tileContainer = document.getElementById("pizzaTiles");
+    pizzas.forEach((pizza, index) => {
+      const qtyId = `qty${index}`;
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.innerHTML = `
+        <img src="${pizza.image}" alt="${pizza.name}" />
+        <h2>${pizza.name}</h2>
+        <p>${pizza.desc}</p>
+        <p><strong>$${pizza.price.toFixed(2)}</strong></p>
+        <select id="${qtyId}">
+          ${[...Array(10)].map((_, i) => `<option value="${i+1}">Qty: ${i+1}</option>`).join('')}
+        </select>
+        <button onclick="addToCart('${pizza.name}', ${pizza.price}, '${qtyId}')">Add to Cart</button>
+      `;
+      tileContainer.appendChild(tile);
+    });
+  </script>
+</body>
+</html>
