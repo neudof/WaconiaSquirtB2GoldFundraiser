@@ -259,26 +259,24 @@
     { name: "Cauliflower Crust Margherita", price: 14.75, desc: "Tomato, basil, garlic, and sliced mozzarella on gluten-free crust.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustMargherita.webp" },
     { name: "Cauliflower Crust Chicken Alfredo", price: 14.75, desc: "White chicken, alfredo sauce, and mozzarella on gluten-free crust.", image: "https://raw.githubusercontent.com/neudof/WaconiaSquirtB2GoldFundraiser/main/images/CauliflowerCrustChickenAlfredo.webp" }
   ];
-
-  const tileContainer = document.getElementById("pizzaTiles");
-  pizzas.forEach((pizza, index) => {
-    const qtyId = `qty${index}`;
-    const tile = document.createElement("div");
-    tile.className = "tile";
-    tile.innerHTML = `
-      <img src="${pizza.image}" alt="${pizza.name}" />
-      <h2>${pizza.name}</h2>
-      <p>${pizza.desc}</p>
-      tile.innerHTML = `
-  <img src="${pizza.image}" alt="${pizza.name}" />
-  <h2>${pizza.name}</h2>
-  <p>${pizza.desc}</p>
-  <p><strong>$${pizza.price.toFixed(2)}</strong></p>
-  <select id="${qtyId}">
-    ${[...Array(10)].map((_, i) => `<option value="${i+1}">Qty: ${i+1}</option>`).join('')}
-  </select>
-  <button onclick="addToCart('${pizza.name}', ${pizza.price}, '${qtyId}')">Add to Cart</button>
-`;
+const tileContainer = document.getElementById("pizzaTiles");
+pizzas.forEach((pizza, index) => {
+  const qtyId = `qty${index}`;
+  const tile = document.createElement("div");
+  tile.className = "tile";
+  tile.innerHTML = `
+    <img src="${pizza.image}" alt="${pizza.name}" />
+    <h2>${pizza.name}</h2>
+    <p>${pizza.desc}</p>
+    <p><strong>$${pizza.price.toFixed(2)}</strong></p>
+    <select id="${qtyId}">
+      ${[...Array(10)].map((_, i) => `<option value="${i+1}">Qty: ${i+1}</option>`).join('')}
+    </select>
+    <button onclick="addToCart('${pizza.name}', ${pizza.price}, '${qtyId}')">Add to Cart</button>
+  `;
+  tileContainer.appendChild(tile);
+});
     </script>
 </body>
 </html>
+
